@@ -29,6 +29,10 @@ app.use(
     courseRoute
 );
 
+app.get("/", (req, res) => {
+    res.send("Hello from Express!");
+});
+
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
