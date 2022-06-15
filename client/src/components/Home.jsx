@@ -62,7 +62,7 @@ const Home = () => {
                 </div>
 
                 <footer className="pt-3 mt-4 text-muted border-top">
-                    &copy; 2021 Wilson Ren
+                    &copy; 2022 Chris Wu
                 </footer>
             </div>
         </main>

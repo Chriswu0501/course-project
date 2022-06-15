@@ -32,7 +32,6 @@ const Course = (props) => {
         } else if (currUser.user.role === "student") {
             CourseService.getEnrolledCourses(_id)
                 .then((data) => {
-                    console.log(data);
                     setCourseData(data.data);
                 })
                 .catch((error) => {

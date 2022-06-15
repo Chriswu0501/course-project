@@ -44,15 +44,25 @@ router.get("/student/:_student_id", (req, res) => {
 
 router.get("/findbyname/:name", (req, res) => {
     let { name } = req.params;
-    Course.find({ title: { $regex: name, $options: "i" } })
-        .populate("instructor", ["username", "email"])
-        .then((courses) => {
-            console.log(courses);
-            res.status(200).send(courses);
-        })
-        .catch(() => {
-            res.status(500).send("Cannot find course.");
-        });
+    if (name == "all") {
+        Course.find({})
+            .populate("instructor", ["username", "email"])
+            .then((courses) => {
+                res.status(200).send(courses);
+            })
+            .catch(() => {
+                res.status(500).send("Cannot find course.");
+            });
+    } else {
+        Course.find({ title: { $regex: name, $options: "i" } })
+            .populate("instructor", ["username", "email"])
+            .then((courses) => {
+                res.status(200).send(courses);
+            })
+            .catch(() => {
+                res.status(500).send("Cannot find course.");
+            });
+    }
 });
 
 router.get("/:_id", (req, res) => {

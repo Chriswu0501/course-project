@@ -19,8 +19,8 @@ const Enroll = (props) => {
     const handleSearch = () => {
         CourseService.getCourseByName(searchInput)
             .then((data) => {
-                console.log(data);
                 setSearchResult(data.data);
+                setSearchInput("");
             })
             .catch((error) => {
                 console.log(error);
@@ -37,6 +37,16 @@ const Enroll = (props) => {
                 console.log(err);
             });
     };
+
+    useEffect(() => {
+        CourseService.getCourseByName("all")
+            .then((data) => {
+                setSearchResult(data.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <div style={{ padding: "3rem" }}>
@@ -62,6 +72,7 @@ const Enroll = (props) => {
                         onChange={handleChangeInput}
                         type="text"
                         className="form-control"
+                        value={searchInput}
                     />
                     <button onClick={handleSearch} className="btn btn-primary">
                         Search
