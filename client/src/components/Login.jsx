@@ -46,6 +46,7 @@ const Login = (props) => {
                         type="text"
                         className="form-control"
                         name="email"
+                        autoComplete="off"
                     />
                 </div>
                 <br />

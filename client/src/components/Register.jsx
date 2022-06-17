@@ -54,6 +54,7 @@ const Register = () => {
                         type="text"
                         className="form-control"
                         name="username"
+                        autoComplete="off"
                     />
                 </div>
                 <br />
@@ -64,6 +65,7 @@ const Register = () => {
                         type="text"
                         className="form-control"
                         name="email"
+                        autoComplete="off"
                     />
                 </div>
                 <br />
