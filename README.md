@@ -12,19 +12,19 @@ Or, you can be a student to enroll any courses.
 
 ### As a student
 
-![image](client\src\images\regist_student.gif)
+![image](https://github.com/Chriswu0501/course-project/blob/main/client/src/images/regist_student.gif?raw=true)
 
 ### Enroll courses
 
-![image](client\src\images\enroll_student.gif)
+![image](https://github.com/Chriswu0501/course-project/blob/main/client/src/images/enroll_student.gif?raw=true)
 
 ### As a instructor
 
-![image](client\src\images\regist_instructor.gif)
+![image](https://github.com/Chriswu0501/course-project/blob/main/client/src/images/regist_instructor.gif?raw=true)
 
 ### Post courses
 
-![image](client\src\images\postcourse_instructor.gif)
+![image](https://github.com/Chriswu0501/course-project/blob/main/client/src/images/postcourse_instructor.gif?raw=true)
 
 ## Notice
 
