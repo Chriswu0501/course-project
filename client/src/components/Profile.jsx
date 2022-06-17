@@ -5,22 +5,25 @@ const Profile = (props) => {
     return (
         <div style={{ padding: "3rem" }}>
             {currUser ? (
-                <div>
-                    <h1>In profile page</h1>
-                    <header className="jumbotron">
-                        <h3>
+                <div className="card">
+                    <div className="card-header">In profile page</div>
+                    <div className="card-body">
+                        <h3 className="card-title">
                             <strong>{currUser.user.username}</strong>
                         </h3>
-                    </header>
-                    <p>
-                        <strong>ID: {currUser.user._id}</strong>
-                    </p>
-                    <p>
-                        <strong>Email: {currUser.user.email}</strong>
-                    </p>
-                    <p>
-                        <strong>Token: {currUser.token}</strong>
-                    </p>
+                        <p>
+                            <strong>ID: {currUser.user._id}</strong>
+                        </p>
+                        <p>
+                            <strong>Email: {currUser.user.email}</strong>
+                        </p>
+                        <p>
+                            <strong>Token: {currUser.token}</strong>
+                        </p>
+                        <p>
+                            <strong>Role: {currUser.user.role}</strong>
+                        </p>
+                    </div>
                 </div>
             ) : (
                 <div className="alert alert-warning">

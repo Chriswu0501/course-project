@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
     return (
@@ -14,12 +15,15 @@ const Home = () => {
                             is one of the most popular way to create modern
                             websites.
                         </p>
-                        <button
+                        <a
                             className="btn btn-primary btn-lg"
                             type="button"
+                            href="https://github.com/Chriswu0501/course-project"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
                             See how it works.
-                        </button>
+                        </a>
                     </div>
                 </div>
 
@@ -33,12 +37,13 @@ const Home = () => {
                                 do not provide any personal information, such as
                                 credit card numbers.
                             </p>
-                            <button
+                            <Link
                                 className="btn btn-outline-light"
                                 type="button"
+                                to="/register"
                             >
                                 Login or Register Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
                     <div className="col-md-6">
@@ -51,12 +56,13 @@ const Home = () => {
                                 do not provide any personal information, such as
                                 credit card numbers.
                             </p>
-                            <button
+                            <Link
                                 className="btn btn-outline-secondary"
                                 type="button"
+                                to="/register"
                             >
                                 Login or Register Now
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
