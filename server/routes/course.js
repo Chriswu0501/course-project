@@ -90,6 +90,19 @@ router.post("/enroll/:_id", async (req, res) => {
     }
 });
 
+router.post("/cancel/:_id", async (req, res) => {
+    let { _id } = req.params;
+    let { user_id } = req.body;
+    try {
+        let course = await Course.findOne({ _id });
+        course.students = course.students.filter((id) => id !== user_id);
+        await course.save();
+        res.status(200).send("Cancel Done.");
+    } catch (error) {
+        res.status(404).send(error);
+    }
+});
+
 router.post("/", async (req, res) => {
     // validate the inputs before making a new course
     const { error } = courseValidation(req.body);

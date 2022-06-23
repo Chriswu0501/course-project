@@ -9,6 +9,7 @@ import AuthService from "./services/auth.service";
 import Course from "./components/Course";
 import PostCourse from "./components/PostCourse";
 import Enroll from "./components/Enroll";
+import EditCourse from "./components/EditCourse";
 
 function App() {
     let [currUser, setCurrUser] = useState(AuthService.getCurrUser());
@@ -49,6 +50,16 @@ function App() {
                     path="/postcourse"
                     element={
                         <PostCourse
+                            currUser={currUser}
+                            setCurrUser={setCurrUser}
+                        />
+                    }
+                />
+
+                <Route
+                    path="/:id"
+                    element={
+                        <EditCourse
                             currUser={currUser}
                             setCurrUser={setCurrUser}
                         />

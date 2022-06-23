@@ -87,7 +87,7 @@ const Enroll = (props) => {
                             <div
                                 key={course._id}
                                 className="card"
-                                style={{ width: "18rem" }}
+                                style={{ width: "18rem", margin: "1rem" }}
                             >
                                 <div className="card-body">
                                     <h5 className="card-title">

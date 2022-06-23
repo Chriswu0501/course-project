@@ -10,6 +10,32 @@ const Course = (props) => {
         navigate("/login");
     };
 
+    const handleUpdate = (e) => {
+        navigate("/" + e.target.id);
+    };
+
+    const handleDelete = (e) => {
+        CourseService.delete(e.target.id)
+            .then(() => {
+                window.alert("Delete Done");
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    const handleCancel = (e) => {
+        CourseService.cancel(e.target.id, currUser.user._id)
+            .then(() => {
+                window.alert("Cancel Done");
+                window.location.reload();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
     let [courseData, setCourseData] = useState(null);
 
     useEffect(() => {
@@ -77,12 +103,38 @@ const Course = (props) => {
                                     <p className="card-text">
                                         {course.description}
                                     </p>
+                                    <p className="card-text">
+                                        Price: ${course.price}
+                                    </p>
                                     <p>
                                         Student Count: {course.students.length}
                                     </p>
-                                    <button className="btn btn-primary">
-                                        ${course.price}
-                                    </button>
+                                    {currUser.user.role === "instructor" ? (
+                                        <div className="btn-group">
+                                            <button
+                                                className="btn btn-outline-primary"
+                                                onClick={handleUpdate}
+                                                id={course._id}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="btn btn-outline-primary"
+                                                id={course._id}
+                                                onClick={handleDelete}
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            className="btn btn-primary"
+                                            onClick={handleCancel}
+                                            id={course._id}
+                                        >
+                                            Cancel
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         );
