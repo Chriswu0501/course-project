@@ -8,6 +8,8 @@ This system is using **React.js** as front-end framework, and **Node.js**, **Exp
 In this website, you can become an instructor by registering as one, and start making online courses.
 Or, you can be a student to enroll any courses.
 
+![image](https://github.com/Chriswu0501/course-project/blob/main/client/public/images/flowchart.JPG?raw=true)
+
 ## Structure
 
 ```text
@@ -36,7 +38,7 @@ Or, you can be a student to enroll any courses.
 │   └── ...                         # etc.
 ├── server
 │   ├── config
-│   │  └── passport.js              # Passport strategy setting
+│   │  └── passport.js              # JWT validation
 │   ├── models                      # Mongoose model setting
 │   │  ├── course-model.js
 │   │  ├── user-model.js
