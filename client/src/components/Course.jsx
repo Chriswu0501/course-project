@@ -39,7 +39,6 @@ const Course = (props) => {
     let [courseData, setCourseData] = useState(null);
 
     useEffect(() => {
-        console.log("Using effect.");
         let _id;
         if (currUser) {
             _id = currUser.user._id;
@@ -47,14 +46,16 @@ const Course = (props) => {
             _id = "";
         }
 
+        // if users are instructor, show courses that created by themselves
         if (currUser.user.role === "instructor") {
-            CourseService.get(_id)
+            CourseService.getCoursebyInstructor(_id)
                 .then((data) => {
                     setCourseData(data.data);
                 })
                 .catch((err) => {
                     console.log(err);
                 });
+            // if users are students, show courses that enrolled by themselves
         } else if (currUser.user.role === "student") {
             CourseService.getEnrolledCourses(_id)
                 .then((data) => {

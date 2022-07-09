@@ -19,9 +19,15 @@ mongoose
     });
 
 // middlewares
+// bodyParser for JSON
 app.use(express.json());
+
+// bodyParser for urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+// Enable all cors requests
 app.use(cors());
+
 app.use("/api/user", authRoute);
 app.use(
     "/api/courses",

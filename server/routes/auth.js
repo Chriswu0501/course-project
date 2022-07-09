@@ -5,18 +5,7 @@ const User = require("../models").userModel;
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
-router.use((req, res, next) => {
-    console.log("A request is coming into auth.js");
-    next();
-});
-
-router.get("/testAPI", (req, res) => {
-    const msgObj = {
-        message: "Test API is working.",
-    };
-    return res.json(msgObj);
-});
-
+// post user register data
 router.post("/register", async (req, res) => {
     // check the validation of data
     const { error } = registerValidation(req.body);
@@ -34,6 +23,8 @@ router.post("/register", async (req, res) => {
         password: req.body.password,
         role: req.body.role,
     });
+
+    // save user data to db
     try {
         const saveUser = await newUser.save();
         res.status(200).send({
@@ -45,23 +36,28 @@ router.post("/register", async (req, res) => {
     }
 });
 
+// post user login data
 router.post("/login", (req, res) => {
     // check the validation of data
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
+    // find user's email from db
     User.findOne({ email: req.body.email }, (err, user) => {
         if (err) {
             return res.status(400).send(err);
         }
 
+        // check whether user exists
         if (!user) {
             return res.status(401).send("User not found.");
         } else {
+            // if user exists, compare password in req body to password in db
             user.comparePassword(req.body.password, (err, isMatch) => {
                 if (err) {
                     return res.status(400).send(err);
                 }
+                // if password match, generate jwt with user's id and email, then send back to user
                 if (isMatch) {
                     const tokenObject = { _id: user.id, email: user.email };
                     const token = jwt.sign(

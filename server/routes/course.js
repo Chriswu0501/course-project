@@ -2,22 +2,19 @@ const router = require("express").Router();
 const Course = require("../models").courseModel;
 const courseValidation = require("../validation").courseValidation;
 
-router.use((req, res, next) => {
-    console.log("A request is coming into API.");
-    next();
-});
-
+// get all courses data
 router.get("/", (req, res) => {
     Course.find({})
         .populate("instructor", ["username", "email"])
-        .then((course) => {
-            res.send(course);
+        .then((courses) => {
+            res.send(courses);
         })
         .catch(() => {
             res.status(500).send("Error! Cannot get course!");
         });
 });
 
+// get courses that create by specific instructor
 router.get("/instructor/:_instructor_id", (req, res) => {
     let { _instructor_id } = req.params;
     Course.find({ instructor: _instructor_id })
@@ -30,6 +27,7 @@ router.get("/instructor/:_instructor_id", (req, res) => {
         });
 });
 
+// get courses that enroll by specific student
 router.get("/student/:_student_id", (req, res) => {
     let { _student_id } = req.params;
     Course.find({ students: _student_id })
@@ -42,29 +40,20 @@ router.get("/student/:_student_id", (req, res) => {
         });
 });
 
+// get specific course by name
 router.get("/findbyname/:name", (req, res) => {
     let { name } = req.params;
-    if (name == "all") {
-        Course.find({})
-            .populate("instructor", ["username", "email"])
-            .then((courses) => {
-                res.status(200).send(courses);
-            })
-            .catch(() => {
-                res.status(500).send("Cannot find course.");
-            });
-    } else {
-        Course.find({ title: { $regex: name, $options: "i" } })
-            .populate("instructor", ["username", "email"])
-            .then((courses) => {
-                res.status(200).send(courses);
-            })
-            .catch(() => {
-                res.status(500).send("Cannot find course.");
-            });
-    }
+    Course.find({ title: { $regex: name, $options: "i" } })
+        .populate("instructor", ["username", "email"])
+        .then((courses) => {
+            res.status(200).send(courses);
+        })
+        .catch(() => {
+            res.status(500).send("Cannot find course.");
+        });
 });
 
+// get specific course by id
 router.get("/:_id", (req, res) => {
     let { _id } = req.params;
     Course.findOne({ _id })
@@ -77,6 +66,7 @@ router.get("/:_id", (req, res) => {
         });
 });
 
+// enroll course
 router.post("/enroll/:_id", async (req, res) => {
     let { _id } = req.params;
     let { user_id } = req.body;
@@ -90,6 +80,7 @@ router.post("/enroll/:_id", async (req, res) => {
     }
 });
 
+// cancel enrolled course
 router.post("/cancel/:_id", async (req, res) => {
     let { _id } = req.params;
     let { user_id } = req.body;
@@ -103,16 +94,20 @@ router.post("/cancel/:_id", async (req, res) => {
     }
 });
 
+// post a new course
 router.post("/", async (req, res) => {
     // validate the inputs before making a new course
     const { error } = courseValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let { title, description, price } = req.body;
+
+    // check whether user' role is instuctor
     if (!req.user.isInstructor()) {
         return res.status(400).send("Only instructor can post a new course.");
     }
 
+    // create a new coruse
     let newCourse = new Course({
         title,
         description,
@@ -120,6 +115,7 @@ router.post("/", async (req, res) => {
         instructor: req.user._id,
     });
 
+    // save a new course
     try {
         await newCourse.save();
         res.status(200).send("New course has been saved.");
@@ -128,12 +124,14 @@ router.post("/", async (req, res) => {
     }
 });
 
+// update specific course
 router.patch("/:_id", async (req, res) => {
     // validate the inputs before making a new course
     const { error } = courseValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
     let { _id } = req.params;
+    // check whether course exists
     let course = await Course.findOne({ _id });
     if (!course) {
         return res.status(404).json({
@@ -142,6 +140,7 @@ router.patch("/:_id", async (req, res) => {
         });
     }
 
+    // check whether editor is the instructor of this course or web admin
     if (course.instructor.equals(req.user._id) || req.user.isAdmin()) {
         try {
             await Course.findOneAndUpdate({ _id }, req.body, {
@@ -164,6 +163,7 @@ router.patch("/:_id", async (req, res) => {
     }
 });
 
+// delete specific course
 router.delete("/:_id", async (req, res) => {
     let { _id } = req.params;
     let course = await Course.findOne({ _id });
@@ -174,6 +174,7 @@ router.delete("/:_id", async (req, res) => {
         });
     }
 
+    // check whether editor is the instructor of this course or web admin
     if (course.instructor.equals(req.user._id) || req.user.isAdmin()) {
         try {
             await Course.deleteOne({ _id });

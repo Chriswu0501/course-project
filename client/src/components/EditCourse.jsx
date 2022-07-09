@@ -35,11 +35,11 @@ const EditCourse = (props) => {
                 navigate("/course");
             })
             .catch((error) => {
-                console.log(error.response);
                 setMessage(error.response.data);
             });
     };
 
+    // show course's original data
     useEffect(() => {
         CourseService.getCourseByID(_id)
             .then((data) => {

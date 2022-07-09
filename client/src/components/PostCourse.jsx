@@ -33,7 +33,6 @@ const PostCourse = (props) => {
                 navigate("/course");
             })
             .catch((error) => {
-                console.log(error.response);
                 setMessage(error.response.data);
             });
     };

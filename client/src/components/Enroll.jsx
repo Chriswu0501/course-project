@@ -17,14 +17,24 @@ const Enroll = (props) => {
     };
 
     const handleSearch = () => {
-        CourseService.getCourseByName(searchInput)
-            .then((data) => {
-                setSearchResult(data.data);
-                setSearchInput("");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (searchInput) {
+            CourseService.getCourseByName(searchInput)
+                .then((data) => {
+                    setSearchResult(data.data);
+                    setSearchInput("");
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            CourseService.get()
+                .then((data) => {
+                    setSearchResult(data.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
     };
 
     const handleEnroll = (e) => {
@@ -38,8 +48,9 @@ const Enroll = (props) => {
             });
     };
 
+    // show all courses in search page
     useEffect(() => {
-        CourseService.getCourseByName("all")
+        CourseService.get()
             .then((data) => {
                 setSearchResult(data.data);
             })

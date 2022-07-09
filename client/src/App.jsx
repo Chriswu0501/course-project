@@ -12,6 +12,7 @@ import Enroll from "./components/Enroll";
 import EditCourse from "./components/EditCourse";
 
 function App() {
+    // get the current user and set it as default
     let [currUser, setCurrUser] = useState(AuthService.getCurrUser());
 
     return (

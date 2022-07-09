@@ -3,6 +3,21 @@ const API_URL = "https://project-07.herokuapp.com/api/courses";
 // const API_URL = "http://localhost:8080/api/courses";
 
 class CourseService {
+    get() {
+        let token;
+        if (localStorage.getItem("user")) {
+            token = JSON.parse(localStorage.getItem("user")).token;
+        } else {
+            token = "";
+        }
+
+        return axios.get(API_URL, {
+            headers: {
+                Authorization: token,
+            },
+        });
+    }
+
     post(title, description, price) {
         let token;
         if (localStorage.getItem("user")) {
@@ -52,7 +67,7 @@ class CourseService {
         });
     }
 
-    get(_id) {
+    getCoursebyInstructor(_id) {
         let token;
         if (localStorage.getItem("user")) {
             token = JSON.parse(localStorage.getItem("user")).token;
